@@ -1,0 +1,14 @@
+[user]
+    name = 'V. Zaitsev'
+    email = dev.zaitsev@gmail.com
+
+[core]
+    editor = nvim
+    pager = less -FRX
+
+[color]
+    ui = auto
+
+[pull]
+    rebase = true
+
