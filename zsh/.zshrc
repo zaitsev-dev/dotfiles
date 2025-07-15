@@ -48,6 +48,7 @@ zplug "zsh-users/zsh-autosuggestions", as:plugin, defer:2
 zplug "Aloxaf/fzf-tab", as:plugin, defer:2
 zplug "MichaelAquilina/zsh-you-should-use"
 zplug "fdellwing/zsh-bat"
+zplug "alexrochas/zsh-extract"
 
 
 # Install plugins if there are plugins that have not been installed
