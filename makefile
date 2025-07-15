@@ -5,7 +5,7 @@ DOTFILES = zsh git
 
 .PHONY: all init clean help
 
-all: init
+all: init init-local
 
 init:
 	@echo "🚀 Copying dotfiles..."
@@ -14,6 +14,16 @@ init:
 		$(STOW) $$dir; \
 	done
 	@echo "✅ Done!"
+
+init-local:
+	@ZSHRC_LOCAL_PATH="$${HOME}/.zshrc.local"; \
+	if [ -f "$$ZSHRC_LOCAL_PATH" ]; then \
+		echo "✅ File .zshrc.local already exists: $$ZSHRC_LOCAL_PATH"; \
+	else \
+		echo "📝 Creating the .zshrc.local at path: $$ZSHRC_LOCAL_PATH"; \
+		cp .zshrc.local.example ~/.zshrc.local; \
+		echo "✅ .zshrc.local was created!"; \
+	fi
 
 clean:
 	@echo "🧹 Delete symlinks..."

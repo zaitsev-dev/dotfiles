@@ -1,0 +1,3 @@
+# Local vars and secrets. Do not commit to VCS!
+export NL_SERV=
+

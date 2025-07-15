@@ -7,6 +7,7 @@ fi
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+
 # Themes
 ZSH_THEME="robbyrussell"
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
@@ -66,10 +67,18 @@ plugins=(
     colored-man-pages
     direnv
     fzf
+    pj
 )
 source $ZSH/oh-my-zsh.sh
 
 # => User Settings
+
+# Load local envs and secrets
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# Projects dir for pj
+export PROJECT_PATHS=(~/Projects)
+
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
