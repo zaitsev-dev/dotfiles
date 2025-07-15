@@ -41,11 +41,12 @@ source <(fzf --zsh)
 # ==> zplug section
 source ~/.zplug/init.zsh
 
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+zplug "zplug/zplug", hook-build:"zplug --self-manage"
 zplug "zsh-users/zsh-syntax-highlighting", as:plugin, defer:2
 zplug "zsh-users/zsh-autosuggestions", as:plugin, defer:2
 zplug "Aloxaf/fzf-tab", as:plugin, defer:2
 zplug "MichaelAquilina/zsh-you-should-use"
+zplug "fdellwing/zsh-bat"
 
 
 # Install plugins if there are plugins that have not been installed
@@ -87,3 +88,24 @@ alias lsd="ls"
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Reload config at change
+autoload -Uz add-zsh-hook
+
+ZSHRC="$HOME/.zshrc"
+ZSHRC_HASH_FILE="$HOME/.zshrc.sha1"
+
+function check_zshrc_update() {
+  if [[ -f "$ZSHRC" ]]; then
+    current_hash=$(sha1sum "$ZSHRC" | awk '{print $1}')
+    saved_hash=$(<"$ZSHRC_HASH_FILE")
+
+    if [[ "$current_hash" != "$saved_hash" ]]; then
+      echo "🔄 .zshrc was changed, reload config..."
+      source "$ZSHRC"
+      echo "$current_hash" > "$ZSHRC_HASH_FILE"
+    fi
+  fi
+}
+
+add-zsh-hook precmd check_zshrc_update
