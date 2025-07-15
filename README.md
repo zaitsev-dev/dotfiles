@@ -4,7 +4,11 @@ Keep my dotfiles here. For real.
 
 ## Usage
 
-1. Clone the Git repository, and navigate to the dir
+1. Clone the Git repository to `~/.dotfiles`, and navigate to the dir
+```sh
+git clone https://github.com/zaitsev-dev/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+```
 2. Install dependencies and my everyday soft:
 ```sh
 make install-macos
