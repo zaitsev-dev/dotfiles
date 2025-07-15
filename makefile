@@ -1,9 +1,8 @@
-# Makefile for dotfiles deployment using GNU Stow
-
 STOW = stow
-DOTFILES = zsh git
+DOTFILES = zsh vim
+MACOS_DEPS = stow fzf zsh neovim ranger bat httpie
 
-.PHONY: all init clean help
+.PHONY: all init clean help install-macos-deps init-local
 
 all: init init-local
 
@@ -33,11 +32,23 @@ clean:
 	done
 	@echo "🗑️  Cleaned up!"
 
+install-macos:
+	@echo "Deps: $(MACOS_DEPS)";
+	@read -p "Proceed and install? [y/N] " confirm; \
+	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
+		echo "🚀 Installing MacOS dependencies and some soft ;)"; \
+		brew install $(MACOS_DEPS); \
+	else \
+		echo "Nothing to do: operation was canceled by user"; \
+	fi
+	@echo "✅ Done!";
+
 # Помощь
 help:
 	@echo "📘 Makefile commands:"
-	@echo "  make         — run init as default"
-	@echo "  make init    — create symlinks for dotfiles at new machine (using Stow)"
-	@echo "  make clean   — delete all symlinks (de-stow)"
-	@echo "  make help    — show this message"
-
+	@echo "  make               — equivalent to init and init-local at the same run"
+	@echo "  make init          — create symlinks for dotfiles at new machine (using Stow)"
+	@echo "  make init-local    — create .zshrc.local for secrets and envs"
+	@echo "  make install-macos - install dependencies and soft via Homebrew"
+	@echo "  make clean         — delete all symlinks (de-stow)"
+	@echo "  make help          — show this message"
