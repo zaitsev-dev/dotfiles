@@ -92,7 +92,7 @@ export YSU_MESSAGE_POSITION="after"
 # => Aliases 
 alias zcfg="nvim ~/.zshrc"
 alias vim="nvim"
-alias lsd="ls"
+alias ls="lsd"
 
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

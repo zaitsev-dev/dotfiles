@@ -1,6 +1,6 @@
 STOW = stow
 DOTFILES = zsh vim
-MACOS_DEPS = stow fzf zsh neovim ranger bat httpie
+MACOS_DEPS = stow fzf zsh neovim ranger bat httpie lsd
 
 .PHONY: all init clean help install-macos-deps init-local
 
