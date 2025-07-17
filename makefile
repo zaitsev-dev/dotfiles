@@ -1,8 +1,8 @@
 STOW = stow
 DOTFILES = zsh vim git
-MACOS_DEPS = stow fzf zsh neovim ranger bat httpie lsd topgrade
+BREWFILE ?= Brewfile
 
-.PHONY: all init clean help install-macos-deps init-local
+.PHONY: all init clean help install-macos init-local
 
 all: init init-local
 
@@ -33,17 +33,32 @@ clean:
 	@echo "🗑️  Cleaned up!"
 
 install-macos:
-	@echo "Deps: $(MACOS_DEPS)";
-	@read -p "Proceed and install? [y/N] " confirm; \
+	@if ! command -v brew >/dev/null 2>&1; then \
+		echo "❗ Homebrew is not installed."; \
+		read -p "Install Homebrew now? [y/N] " install_brew; \
+		if [ "$$install_brew" = "y" ] || [ "$$install_brew" = "Y" ]; then \
+			echo "🔧 Installing Homebrew..."; \
+			/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; \
+			echo 'eval "$$(/opt/homebrew/bin/brew shellenv)"' >> $$HOME/.zprofile; \
+			eval "$$(/opt/homebrew/bin/brew shellenv)"; \
+		else \
+			echo "⛔ Aborting: Homebrew is required."; \
+			exit 1; \
+		fi; \
+	fi; \
+	echo ""; \
+	echo "📦 Packages to be installed from $(BREWFILE):"; \
+	cat $(BREWFILE); \
+	echo ""; \
+	read -p "Proceed and install these packages? [y/N] " confirm; \
 	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
 		echo "🚀 Installing MacOS dependencies and some soft ;)"; \
-		brew install $(MACOS_DEPS); \
+		brew bundle --file=$(BREWFILE); \
+		echo "✅ Done!"; \
 	else \
-		echo "Nothing to do: operation was canceled by user"; \
+		echo "Nothing to do: operation was canceled by user."; \
 	fi
-	@echo "✅ Done!";
 
-# Помощь
 help:
 	@echo "📘 Makefile commands:"
 	@echo "  make               — equivalent to init and init-local at the same run"
