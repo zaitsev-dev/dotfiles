@@ -7,6 +7,7 @@ brew "bat"
 brew "httpie"
 brew "lsd"
 brew "topgrade"
+brew "uv"
 
 cask "alt-tab"
-
+cask "hiddenbar"
